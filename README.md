@@ -6,13 +6,19 @@ gotten through a tutorial or two on the subject, I can see what the problem was,
 So, I ran these steps through a clean Docker instance, and had to install everything from scratch.
 
 docker run -p 8000:8000 --expose 8000 -it ubuntu:18.04\
+docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -it ubuntu:18.04\
+
 apt-get update\
 ### install the basics\
 apt-get install -y dialog software-properties-common sudo curl git nano net-tools \
-### install apache2, php7.2, and mysql:\
-apt-get install -y apache2 php7.2 mysql-server libapache2-mod-php7.2 php7.2 php7.2-xml php7.2-gd php7.2-opcache php7.2-mbstring 7.2-zip php7.2-mysql \
+### install apache2, php7.2, mysql, and openssh-server:\
+apt-get install -y apache2 php7.2 mysql-server openssh-server libapache2-mod-php7.2 php7.2 php7.2-xml php7.2-gd php7.2-opcache php7.2-mbstring 7.2-zip php7.2-mysql \
 service mysql start\
 mysql_secure_installation\
+### if you want to be able to ssh into the docker instance, uncomment this line in /etc/ssh/sshd_config:\
+ListenAddress 0.0.0.0
+service ssh restart
+
 ### install composer:\
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer\
 ### install laravel:
@@ -30,27 +36,12 @@ echo 'PATH="$HOME/.composer/vendor/bin:$PATH"' >> .bashrc\
 ### start using the updated path\
 source .bashrc
 
-
 laravel new <app name>
 
 ### cd into the newly created <app name> directory
 
 ### edit the composer.json file, to add the tymon/jwt-auth line:
-
-******************************
-
-### add the openssh server, and be able to use it:
-
-docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -it lara1
-
-apt-get install openssh-server
-
-ListenAddress 0.0.0.0
-
-
-
-*****************************
-
+```json
     "require": {
         "php": "^7.1.3",
         "fideloper/proxy": "^4.0",
@@ -58,6 +49,7 @@ ListenAddress 0.0.0.0
         "laravel/tinker": "^1.0",
         "tymon/jwt-auth": "^1.0.0-rc.1"
     },
+```    
 
 ### edit the .env file, to provide access to the mysql database:
 
