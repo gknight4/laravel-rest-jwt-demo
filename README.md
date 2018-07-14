@@ -9,31 +9,31 @@ docker run -p 8000:8000 --expose 8000 -it ubuntu:18.04\
 docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -it ubuntu:18.04\
 
 apt-get update\
-### install the basics\
-apt-get install -y dialog software-properties-common sudo curl git nano net-tools \
-### install apache2, php7.2, mysql, and openssh-server:\
+### install the basics
+apt-get install -y dialog software-properties-common sudo curl git nano net-tools 
+### install apache2, php7.2, mysql, and openssh-server:
 apt-get install -y apache2 php7.2 mysql-server openssh-server libapache2-mod-php7.2 php7.2 php7.2-xml php7.2-gd php7.2-opcache php7.2-mbstring 7.2-zip php7.2-mysql \
 service mysql start\
-mysql_secure_installation\
-### if you want to be able to ssh into the docker instance, uncomment this line in /etc/ssh/sshd_config:\
-ListenAddress 0.0.0.0
+mysql_secure_installation
+### if you want to be able to ssh into the docker instance, uncomment this line in /etc/ssh/sshd_config:
+ListenAddress 0.0.0.0\
 service ssh restart
 
-### install composer:\
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer\
+### install composer:
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 ### install laravel:
 
-### create a user to avoid "running Composer as root":\
-adduser lara\
+### create a user to avoid "running Composer as root":
+adduser lara
 ### (answer the questions), then
 
 su lara\
 composer global require "laravel/installer"
 
-cd /home/lara\
-### add the laravel path\
-echo 'PATH="$HOME/.composer/vendor/bin:$PATH"' >> .bashrc\
-### start using the updated path\
+cd /home/lara
+### add the laravel path
+echo 'PATH="$HOME/.composer/vendor/bin:$PATH"' >> .bashrc
+### start using the updated path
 source .bashrc
 
 laravel new <app name>
