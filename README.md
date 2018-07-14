@@ -5,10 +5,8 @@ gotten through a tutorial or two on the subject, I can see what the problem was,
 
 So, I ran these steps through a clean Docker instance, and had to install everything from scratch.
 
-docker run -p 8000:8000 --expose 8000 -it ubuntu:18.04\
 docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -it ubuntu:18.04\
-
-apt-get update\
+apt-get update
 ### install the basics
 apt-get install -y dialog software-properties-common sudo curl git nano net-tools 
 ### install apache2, php7.2, mysql, and openssh-server:
@@ -79,7 +77,7 @@ this will create migrations, password_resets, and users tables.
 ### create a secret key for JWT:
 php artisan jwt:secret
 
-### run the server: (the --host parameter is only necessary if running in a docker container)\
+### run the server: (the --host parameter is only necessary if running in a docker container)
 php artisan serve --host=0.0.0.0
 
 ### edit routes/api.php to add the register, login routes, and set 'jwt.auth' as the middleware authentication:
@@ -138,7 +136,7 @@ Accept: application/json\
 Body:\
 { "name": "jack", "email": "here@there.com", "password": "password"}
 
-Response:\
+Response:
 ```json
 {"message":"The user was registered."}
 ```
@@ -205,7 +203,7 @@ Accept: application/json\
 Body:\
 { "name": "jack", "email": "here@there.com", "password": "password"}
 
-Response:\
+Response:
 ```json
 {"message":"User is logged in."}
 ```
