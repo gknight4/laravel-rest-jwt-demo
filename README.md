@@ -19,9 +19,7 @@ service ssh restart
 
 ### install composer:
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-### install laravel:
-
-### create a user to avoid "running Composer as root":
+### install laravel: firs, create a user to avoid "running Composer as root":
 adduser lara
 ### (answer the questions), then
 
@@ -33,7 +31,7 @@ cd /home/lara
 echo 'PATH="$HOME/.composer/vendor/bin:$PATH"' >> .bashrc
 ### start using the updated path
 source .bashrc
-
+#finally,
 laravel new <app name>
 
 ### cd into the newly created <app name> directory
@@ -60,7 +58,7 @@ DB_PASSWORD=bwXY2Xjr
 
 ### use mysql to create the database and user:
 
-mysql -uroot -p<your mysql root password>\
+mysql -uroot -p(your mysql root password)\
 create database jwtdemo;\
 grant all privileges on jwtdemo.* to homestead@localhost identified by 'bwXY2Xjr' ;\
 quit
@@ -101,9 +99,11 @@ Route::post('login', 'Auth\LoginController@login');
 
 edit app/Http/Controllers/Auth/RegisterController to add a new register function:
 
-add Request and registered:
+### add Request and registered:
+```php
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+```
 
 
 ### add the method:
