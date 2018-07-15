@@ -20,11 +20,11 @@ cd laravel-rest-jwt-demo\
 composer update\
 php artisan migrate
 
-docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -it ubuntu:18.04\
-docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -v /var/local/mysql:/var/lib/mysql -it lara2
-docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -v /var/local/mysql:/var/lib/mysql -it ubuntu:18.04
-docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -it ubuntu:18.04
+Then jump down to the "test it out in Postman" items below.
 
+## Or, to *truly* start from scratch fire up a clean Docker container, with a couple of open ports:
+
+docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -it ubuntu:18.04
 
 apt-get update
 ### install the basics
@@ -120,7 +120,7 @@ Route::post('login', 'Auth\LoginController@login');
 
 edit app/Http/Controllers/Auth/RegisterController to add a new register function:
 
-### add Request and registered:
+### add Request and Registered:
 ```php
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -215,7 +215,7 @@ use JWTAuth;
   }
 ```
 
-test it out in Postman:\
+### test it out in Postman:\
 Method: POST\
 Url: localhost:8000/api/login\
 Headers:\
@@ -234,9 +234,9 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwO...
 
 ## Authorized Request
 
-### copy the header received from login, into the next Authorized Request:
+### copy the Authorization header received from login, into the next Authorized Request:
 
-test it out in Postman:\
+### test it out in Postman:\
 Method: GET\
 Url: localhost:8000/api/user\
 Headers:\
