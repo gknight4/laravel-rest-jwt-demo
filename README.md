@@ -22,9 +22,11 @@ php artisan migrate
 
 Then jump down to the "test it out in Postman" items below.
 
-## Or, to *truly* start from scratch fire up a clean Docker container, with a couple of open ports:
+## Or, to *truly* start from scratch, fire up a clean Docker container, with a couple of open ports:
 
 docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -it ubuntu:18.04
+
+### note that these instructions can be followed on *any* Debian/Ubuntu machine, and don't *have* to be on most. If you already have reasonably current versions of PHP and MySQL, skip on down to "install composer".
 
 apt-get update
 ### install the basics
@@ -40,7 +42,7 @@ service ssh restart
 
 ### install composer:
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-### install laravel: firs, create a user to avoid "running Composer as root":
+### create a 'lara' user, su to it, and then install Laravel in the /home/lara directory
 adduser lara
 ### (answer the questions), then
 
