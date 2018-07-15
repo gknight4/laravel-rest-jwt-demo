@@ -5,23 +5,35 @@ gotten through a tutorial or two on the subject, I can see what the problem was,
 
 So, I ran these steps through a clean Docker instance, and had to install everything from scratch.
 
-To skip the step-by-step, or just to have it sitting alongside as you follow along, install the completed code from Git:\
+### To skip the step-by-step, or just to have it sitting alongside as you follow along, install the completed code from Git:
 git clone https://github.com/gknight4/laravel-rest-jwt-demo
+
+### use mysql to create the database and user:
+mysql -uroot -p(your mysql root password)\
+create database jwtdemo;\
+grant all privileges on jwtdemo.* to homestead@localhost identified by 'bwXY2Xjr' ;\
+quit
+
 
 then:\
 cd laravel-rest-jwt-demo\
-composer update
+composer update\
+php artisan migrate
 
 docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -it ubuntu:18.04\
-docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -v /var/lib/mysql -it lara2
+docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -v /var/local/mysql:/var/lib/mysql -it lara2
+docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -v /var/local/mysql:/var/lib/mysql -it ubuntu:18.04
+docker run -p 8000:8000 -p 8022:22 --expose 8000 --expose 8022 -it ubuntu:18.04
+
+
 apt-get update
 ### install the basics
 apt-get install -y dialog software-properties-common sudo curl git nano net-tools 
 ### install apache2, php7.2, mysql, and openssh-server:
 apt-get install -y apache2 php7.2 mysql-server openssh-server libapache2-mod-php7.2 php7.2 php7.2-xml php7.2-gd php7.2-opcache php7.2-mbstring 7.2-zip php7.2-mysql \
+usermod -d /var/lib/mysql/ mysql\
 service mysql start\
-mysql_secure_installation\
-usermod -d /var/lib/mysql/ mysql
+mysql_secure_installation
 ### if you want to be able to ssh into the docker instance, uncomment this line in /etc/ssh/sshd_config:
 ListenAddress 0.0.0.0\
 service ssh restart
